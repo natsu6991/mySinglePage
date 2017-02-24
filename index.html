@@ -1,0 +1,128 @@
+<!DOCTYPE>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>My Single Page</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        sessionStorage.clear();
+
+        $('.submitLogin').on('click', function(){
+          sessionStorage.setItem('username', $('#username').val());
+          sessionStorage.setItem('password', $('#password').val());
+          $('.login').css("display", 'none');
+          $('.home').css("display", 'initial');
+          $('.menu').css("display", 'initial');
+          $('.pseudo').html(sessionStorage.getItem('username'));
+        });
+
+        $('.accueil').on('click', function(){
+          $('.profil').css("display", 'none');
+          $('.home').css("display", 'initial');
+        });
+
+        $('.name').on('click', function(){
+          $('.home').css("display", 'none');
+          $('.profil').css("display", 'initial');
+        });
+
+        $('.submitProfil').on('click', function(){
+          sessionStorage.removeItem('username', $('#username').val());
+          sessionStorage.setItem('username', $('#newUsername').val());
+          $('.pseudo').html(sessionStorage.getItem('username'));
+          $('#newUsername').val('');
+        });
+
+        $('.deconnexion').on('click', function(){
+          $('#username').val('');
+          $('#password').val('');
+          $('.home').css("display", 'none');
+          $('.profil').css("display", 'none');
+          $('.menu').css("display", 'none');
+          $('.login').css("display", 'initial');
+          sessionStorage.removeItem('password', $('#password').val());
+          sessionStorage.removeItem('username', $('#username').val());
+        });
+      });
+    </script>
+    <style>
+      .container{
+      	border-spacing: 0px;
+      	position: fixed;
+        color: white;
+      	font-size: 15px;
+        width: 100%;
+      	display: table;
+      	height: 30px;
+      	background: #333333;
+        margin: -8px 0 0 -8px;
+      }
+      .tab{
+      	text-decoration: none;
+      	display: table-cell;
+      	vertical-align: middle;
+      	height: 30px;
+        width: 20%;
+      	padding: 0 5px;
+        cursor: pointer;
+        text-align: center;
+      }
+      .tab:hover{
+        color: red;
+      }
+      main{
+        display: flex;
+        justify-content: center;
+      }
+      .marg{
+        margin-top: 70px;
+        text-align: center;
+      }
+      .menu, .profil, .home{
+        display: none;
+      }
+      iframe{
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- menu navigation -->
+    <nav class="menu">
+			<div class='container'>
+				<div class='tab accueil'>Accueil</div>
+				<div class='tab name'>Profil de <span class='pseudo'></span></div>
+				<div class='tab deconnexion'>Déconnexion</div>
+			</div>
+		</nav>
+
+    <main>
+      <!-- page login -->
+      <div class="marg login">
+        <h1>Login</h1>
+        <h3>Veuillez vous connecter pour accéder au site</h3>
+        <input type="text" id="username" name="username" placeholder="add your username">
+        <input type="password" id="password" name="password" placeholder="add your pasword">
+        <button type="submit" name="submitLogin" class="submitLogin">Connexion</button>
+      </div><br>
+
+      <!-- page accueil-->
+        <div class="marg home">
+          <h1>Accueil</h1>
+          <h3 title="I'm sorry !!">Désolé, cette page est en cours de construction !!</h3>
+          <iframe src="https://media.giphy.com/media/q3BNN53ISSJ3y/giphy.gif" width="480" height="160"></iframe>
+        </div><br>
+
+      <!-- page profil -->
+      <div class="marg profil">
+        <h1>Profil de "<span class="pseudo"></span>"</h1>
+        <h3>Voulez-vous changer votre Pseudo ? Si oui, c'est par ici mon kiki !!</h3>
+        <p>(Attention, votre pseudo ci-dessus se modifiera dès que vous enverrez votre nouveau pseudo)</p>
+        <input type="text" id="newUsername" name="newUsername" placeholder="add your new username">
+        <button type="submit" name="submitProfil" class="submitProfil">Replace</button>
+      </div>
+
+    </main>
+  </body>
+</html>
